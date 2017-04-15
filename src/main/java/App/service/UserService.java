@@ -21,11 +21,18 @@ public class UserService {
     }
 
     public boolean signup(User user) {
-        if (user != null && userBaseRepository.findByEmail(user.getEmail()) != null) {
+        if (!valid(user)) {
             return false;
         }
-        // todo: validate
         userBaseRepository.save(user);
         return true;
     }
+
+    boolean valid(User user) {
+        if (user == null || user.getEmail() == null || user.getPassword() == null || user.getPassword().length() < 6
+                || user.getName() == null || userBaseRepository.findByEmail(user.getEmail()) != null)
+            return false;
+        return true;
+    }
+
 }

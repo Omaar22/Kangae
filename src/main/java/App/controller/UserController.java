@@ -17,7 +17,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/signin")
     public User signin(@ModelAttribute(value = "user") User user) {
-        if (user == null)
+        if (user == null || user.getEmail() == null || user.getPassword() == null)
             return null;
         return userService.signin(user.getEmail(), user.getPassword());
     }
