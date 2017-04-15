@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class SignupController {
 
     @RequestMapping("/signup/teacher")
-    public ModelAndView signinTeacher(Model model) {
+    public ModelAndView signupTeacher(Model model) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("signup_teacher");
         Teacher teacher = new Teacher();
@@ -22,12 +22,18 @@ public class SignupController {
     }
 
     @RequestMapping("/signup/student")
-    public ModelAndView signinStudent(Model model) {
+    public ModelAndView signupStudent(Model model) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("signup_student");
         Student student = new Student();
         model.addAttribute("student", student);
         mv.addObject("student", student);
         return mv;
+    }
+
+
+    @RequestMapping("/signup")
+    public String signup() {
+        return "/signup";
     }
 }
