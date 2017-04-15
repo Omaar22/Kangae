@@ -10,7 +10,8 @@ public class UserService {
     @Autowired
     private UserBaseRepository userBaseRepository;
 
-    public User loggedInUser;
+    private User loggedInUser;
+
 
     public User signin(String email, String password) {
         User user = userBaseRepository.findByEmail(email);
@@ -20,19 +21,25 @@ public class UserService {
         return null;
     }
 
+    public void signOut() {
+        loggedInUser = null;
+    }
+
     public boolean signup(User user) {
         if (!valid(user)) {
             return false;
         }
         userBaseRepository.save(user);
+        loggedInUser = user;
         return true;
     }
 
     boolean valid(User user) {
-        if (user == null || user.getEmail() == null || user.getPassword() == null || user.getPassword().length() < 6
-                || user.getName() == null || userBaseRepository.findByEmail(user.getEmail()) != null)
-            return false;
-        return true;
+        return !(user == null || user.getEmail() == null || user.getPassword() == null || user.getPassword().length() < 6
+                || user.getName() == null || userBaseRepository.findByEmail(user.getEmail()) != null);
     }
 
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
 }

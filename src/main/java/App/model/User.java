@@ -89,7 +89,6 @@ public class User {
     }
 
     public User(long id, String email, String name, int age, String password, String gender, String role, String birthDate) {
-
         this.id = id;
         this.email = email;
         this.name = name;
