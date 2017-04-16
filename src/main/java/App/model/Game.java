@@ -12,20 +12,16 @@ public class Game {
     private String name;
     private String description;
     private String instruction;
-//    @ManyToOne
-//    @JoinColumn(name = "id", table = "Course")
-    private long courseID;
 
     public Game() {
     }
 
-    public Game(long id, String name, String description, String instruction, long courseID) {
+    public Game(long id, String name, String description, String instruction) {
 
         this.id = id;
         this.name = name;
         this.description = description;
         this.instruction = instruction;
-        this.courseID = courseID;
     }
 
     public long getId() {
@@ -61,11 +57,4 @@ public class Game {
         this.instruction = instruction;
     }
 
-    public long getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(long courseID) {
-        this.courseID = courseID;
-    }
 }

@@ -5,14 +5,14 @@ import javax.persistence.Entity;
 @Entity
 public class Student extends User{
     private int score = 0;
-    private String school;
+    private String collegeSchool;
 
-    public String getSchool() {
-        return school;
+    public String getCollegeSchool() {
+        return collegeSchool;
     }
 
-    public void setSchool(String school) {
-        this.school = school;
+    public void setCollegeSchool(String collegeSchool) {
+        this.collegeSchool = collegeSchool;
     }
 
     public int getScore() {

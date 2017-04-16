@@ -27,7 +27,7 @@ public class SigninController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/signin")
     public String signin(@ModelAttribute(value = "user") User user, Model model) {
-        if (userService.signin(user.getEmail(), user.getPassword()) != null) {
+        if (userService.signin(user.getEmail(), user.getPassword()) == null) {
             model.addAttribute("user", new User());
             return "redirect:/signin"; // todo: return error message
         } else {

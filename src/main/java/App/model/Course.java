@@ -1,22 +1,32 @@
 package App.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 
 @Entity
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
+    @Column(unique = true)
+    private String name;
 
-//    @ManyToOne
-//    @JoinColumn (name = "name", table = "Teacher")
-    private String teacherName;
+    @ManyToOne
+    @JoinColumn(name = "teacherId")
+    private Teacher teacher;
 
-    public Course() {
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public Course(String teacherName) {
-        this.teacherName = teacherName;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public Course(String name) {
+        this.name = name;
     }
 
     public long getId() {
@@ -27,12 +37,16 @@ public class Course {
         this.id = id;
     }
 
-    public String getTeacherName() {
-        return teacherName;
+    public String getName() {
+        return name;
     }
 
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+    public void setName(String name) {
+        this.name = name;
     }
 
+
+    public Course() {
+
+    }
 }
