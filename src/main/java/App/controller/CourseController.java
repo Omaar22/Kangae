@@ -1,9 +1,11 @@
 package App.controller;
 
 import App.model.Course;
+import App.model.Game;
 import App.model.Teacher;
 import App.model.User;
 import App.service.CourseService;
+import App.service.GameService;
 import App.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,12 +20,14 @@ public class CourseController {
     private UserService userService;
     @Autowired
     private CourseService courseservice;
+    @Autowired
+    private GameService gameService;
 
     @RequestMapping("/courses")
     public String courses(Model model) {
         ArrayList<Course> all = courseservice.getALLCourses();
         model.addAttribute("courses", all);
-        return "/courses";
+        return "/show_courses";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/addcourse")
@@ -44,7 +48,15 @@ public class CourseController {
         }
     }
 
-
+    @RequestMapping(value = "course/{courseName}")
+    public String showCourse(@PathVariable String courseName, Model model) {
+        Course course = courseservice.getCourse(courseName);
+        ArrayList<Game> games = gameService.getGamesInCourse(course);
+        model.addAttribute("course", course);
+        model.addAttribute("user", userService.getLoggedInUser());
+        model.addAttribute("games", games);
+        return "show_games_in_course";
+    }
 }
 
 

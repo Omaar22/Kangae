@@ -10,22 +10,25 @@ public class Game {
     private long id;
     @NotNull
     private String name;
+    @NotNull
     private String description;
+    @NotNull
     private String instruction;
 
-    public Game() {
+    @ManyToOne
+    @JoinColumn(name = "courseId")
+    private Course course;
+
+
+    public Course getCourse() {
+        return course;
     }
 
-    public Game(long id, String name, String description, String instruction) {
-
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.instruction = instruction;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public long getId() {
-
         return id;
     }
 
@@ -55,6 +58,17 @@ public class Game {
 
     public void setInstruction(String instruction) {
         this.instruction = instruction;
+    }
+
+
+    public Game(String name, String description, String instruction, Course course) {
+        this.name = name;
+        this.description = description;
+        this.instruction = instruction;
+        this.course = course;
+    }
+
+    public Game() {
     }
 
 }

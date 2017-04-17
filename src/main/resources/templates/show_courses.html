@@ -24,9 +24,8 @@
 
 <h2 class="form-signin">Courses</h2>
 <div th:each="course : ${courses}" th:object="${courses}" class="form-signin">
-    <form th:action="@{/}">
-        <button th:text="${course.name} + ' created by: ' + ${course.teacher.name}" class="btn btn-lg btn-primary btn-block" type="submit">Open</button>
-
+    <form th:action="@{'/course/' + ${course.name}}">
+    <button th:text="${course.name} + ' created by: ' + ${course.teacher.name}" class="btn btn-lg btn-primary btn-block" type="submit">Open</button>
     </form>
 </div>
 
