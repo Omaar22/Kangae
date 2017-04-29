@@ -6,6 +6,7 @@ import App.model.Student;
 import App.model.Teacher;
 import App.service.CourseService;
 import App.service.GameService;
+import App.service.StudentService;
 import App.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,9 @@ public class GameController {
     private UserService userService;
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private StudentService studentService;
+
 
     @RequestMapping(value = "/course/{courseName}/create/game")
     public String showCourse(@PathVariable String courseName, Model model) {
@@ -63,6 +67,7 @@ public class GameController {
         if (game.getAnswer().equals(originalGame.getAnswer())) {
 //             todo: only increment if not played before
             if (userService.getLoggedInUser() instanceof Student) {
+                studentService.incrementScore(userService.getLoggedInUser().getId());
                 ((Student) userService.getLoggedInUser()).incrementScore();
             }
             return "/accepted";
