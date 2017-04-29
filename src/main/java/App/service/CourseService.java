@@ -34,6 +34,9 @@ public class CourseService {
         courseRepo.delete(course);
     }
 
+    public ArrayList<Course> getCoursesByTeacher(String teacherEmail) {
+        return courseRepo.findByTeacherEmail(teacherEmail);
+    }
 }
 
 

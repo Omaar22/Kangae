@@ -10,5 +10,7 @@ import java.util.ArrayList;
 public interface GameRepository extends CrudRepository<Game, String>{
     ArrayList<Game> findByCourseId(long id);
 
+    ArrayList<Game> findByCourseTeacherEmail(String email);
+
     Game findByCourseNameAndName(String courseName, String name);
 }

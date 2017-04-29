@@ -18,9 +18,7 @@ public class GameService {
     private CourseRepository courseRepo;
 
     public ArrayList<Game> getALLGame() {
-        ArrayList<Game> games = (ArrayList<Game>) gameRepo.findAll();
-        //.forEach(users::add);
-        return games;
+        return (ArrayList<Game>) gameRepo.findAll();
     }
 
     public ArrayList<Game> getGamesInCourse(Course course) {
@@ -46,6 +44,11 @@ public class GameService {
     public Game getGameInCourse(String courseName, String gameName) {
         return gameRepo.findByCourseNameAndName(courseName, gameName);
     }
+
+    public ArrayList<Game> getGamesByTeacherEmail(String teacherEmail) {
+        return gameRepo.findByCourseTeacherEmail(teacherEmail);
+    }
+
 }
 
 
