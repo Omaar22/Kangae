@@ -14,6 +14,10 @@ public class Game {
     private String description;
     @NotNull
     private String instruction;
+    @NotNull
+    private String question;
+    @NotNull
+    private String answer;
 
     @ManyToOne
     @JoinColumn(name = "courseId")
@@ -60,11 +64,28 @@ public class Game {
         this.instruction = instruction;
     }
 
+    public String getQuestion() {
+        return question;
+    }
 
-    public Game(String name, String description, String instruction, Course course) {
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public Game(String name, String description, String instruction, String question, String answer, Course course) {
         this.name = name;
         this.description = description;
         this.instruction = instruction;
+        this.question = question;
+        this.answer = answer;
         this.course = course;
     }
 

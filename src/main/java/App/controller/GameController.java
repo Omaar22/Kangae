@@ -2,6 +2,7 @@ package App.controller;
 
 import App.model.Course;
 import App.model.Game;
+import App.model.Student;
 import App.model.Teacher;
 import App.service.CourseService;
 import App.service.GameService;
@@ -22,7 +23,7 @@ public class GameController {
     @Autowired
     private CourseService courseService;
 
-        @RequestMapping(value = "/course/{courseName}/create/game")
+    @RequestMapping(value = "/course/{courseName}/create/game")
     public String showCourse(@PathVariable String courseName, Model model) {
         Game game = new Game();
         game.setCourse(courseService.getCourse(courseName));
@@ -42,5 +43,32 @@ public class GameController {
         return "redirect:/course/" + courseName;
     }
 
+    @RequestMapping(value = "/course/{courseName}/{gameName}")
+    public String playGame(@PathVariable String courseName, @PathVariable String gameName, Model model) {
+        // todo: check
+        Game game = gameservice.getGameInCourse(courseName, gameName);
+        game.setAnswer("");
+        model.addAttribute("game", game);
+
+        return "/play_game";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/course/{courseName}/{gameName}")
+    public String judge(@ModelAttribute(value = "game") Game game, Model model,
+                        @PathVariable("courseName") String courseName, @PathVariable("gameName") String gameName) {
+        // todo: check
+
+        Game originalGame = gameservice.getGameInCourse(courseName, gameName);
+        model.addAttribute("game", originalGame);
+        if (game.getAnswer().equals(originalGame.getAnswer())) {
+//             todo: only increment if not played before
+            if (userService.getLoggedInUser() instanceof Student) {
+                ((Student) userService.getLoggedInUser()).incrementScore();
+            }
+            return "/accepted";
+        } else {
+            return "/wrong_answer";
+        }
+    }
 
 }

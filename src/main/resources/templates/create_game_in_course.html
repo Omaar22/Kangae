@@ -23,7 +23,7 @@
 </div>
 
 <div class="container">
-    <form th:action="@{'/course/' + ${game.course.name} + '/create/game'}"    th:object="${game}" method="post" class="form-signin">
+    <form th:action="@{'/course/' + ${game.course.name} + '/create/game'}" th:object="${game}" method="post" class="form-signin">
         <h2 class="form-signin-heading">Create Game</h2>
         <label for="inputGameName" class="sr-only">game Name</label>
         <input th:field="${game.name}" id="inputGameName" class="form-control" placeholder="Game Name"
@@ -35,6 +35,14 @@
 
         <label for="inputGameInstructions" class="sr-only">game Instructions</label>
         <input th:field="${game.instruction}" id="inputGameInstructions" class="form-control" placeholder="Game Instructions"
+               th:required="required"/>
+
+        <label for="inputGameQuestion" class="sr-only">game Instructions</label>
+        <input th:field="${game.question}" id="inputGameQuestion" class="form-control" placeholder="Question"
+               th:required="required"/>
+
+        <label for="inputGameAnswer" class="sr-only">game Instructions</label>
+        <input th:field="${game.answer}" id="inputGameAnswer" class="form-control" placeholder="Answer"
                th:required="required"/>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>

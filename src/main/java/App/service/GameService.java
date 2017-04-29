@@ -2,16 +2,20 @@ package App.service;
 
 import App.model.Course;
 import App.model.Game;
+import App.repository.CourseRepository;
 import App.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class GameService {
     @Autowired
     private GameRepository gameRepo;
+    @Autowired
+    private CourseRepository courseRepo;
 
     public ArrayList<Game> getALLGame() {
         ArrayList<Game> games = (ArrayList<Game>) gameRepo.findAll();
@@ -39,6 +43,9 @@ public class GameService {
         gameRepo.delete(game);
     }
 
+    public Game getGameInCourse(String courseName, String gameName) {
+        return gameRepo.findByCourseNameAndName(courseName, gameName);
+    }
 }
 
 
