@@ -1,5 +1,6 @@
 package App.service;
 
+import App.model.Comment;
 import App.model.Course;
 import App.model.Game;
 import App.repository.CourseRepository;
@@ -7,6 +8,7 @@ import App.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +35,15 @@ public class GameService {
         return gameRepo.findOne(id);
     }
 
-    public Game updateGame(String id, Game game) {
+    public Game getGameByName(String name) {
+        return gameRepo.findByName(name);
+    }
+
+    public Game updateGame(Game game) {
         return gameRepo.save(game);
     }
 
-    public void deleteGame(String id, Game game) {
+    public void deleteGame(Game game) {
         gameRepo.delete(game);
     }
 
@@ -52,6 +58,24 @@ public class GameService {
     public boolean isValid(Game game) {
         return gameRepo.findByName(game.getName()) == null;
     }
+
+    public Game copyGame(Game game, Course newCourse) {
+        Game newGame = new Game(game.getName(), game.getDescription(), game.getInstruction(), game.getQuestion(),
+                game.getAnswer(), newCourse);
+        newGame.setName(newGame.getName() + "-copy " + Integer.toString(game.getNumOfCopies() + 1));
+        //TODO:check if changes
+        game.setNumOfCopies(game.getNumOfCopies() + 1);
+        return newGame;
+    }
+
+    public boolean isExist(long id) {
+        if (gameRepo.findById(id) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
 
 
