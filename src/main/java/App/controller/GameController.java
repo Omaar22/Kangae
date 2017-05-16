@@ -92,8 +92,7 @@ public class GameController {
     @RequestMapping(method = RequestMethod.POST, value = "/course/{courseName}/updategame/{gameName}")
     public String update(@ModelAttribute(value = "game") Game game, @PathVariable String courseName, @PathVariable String gameName, Model model) {
         Game oldGame = gameservice.getGameInCourse(courseName, gameName);
-        gameservice.deleteGame(oldGame);
-        if (gameservice.isValid(game)) {
+        if (game.getName().equals(oldGame.getName()) || gameservice.isValid(game)) {
             oldGame.setName(game.getName());
             oldGame.setDescription(game.getDescription());
             oldGame.setInstruction(game.getInstruction());
@@ -102,7 +101,6 @@ public class GameController {
             gameservice.addGame(oldGame);
             return "redirect:/course/" + courseName;
         } else {
-            gameservice.addGame(oldGame);
             model.addAttribute("errorMessage", "Name is already taken.");
             return update(courseName, oldGame.getName(), model);
         }
