@@ -8,14 +8,15 @@
 <body>
 <div th:replace="fragments/header-in::header"></div>
 
-<h1 class="modal-header">Notifications</h1>
-<div th:each="notification : ${notifications}" class="form">
-    <form th:action="@{'/course/' + ${notification.comment.game.course.name} + '/' + ${notification.comment.game.name} + '/options'}"
-          method="get">
-        <button th:text="${notification.content} " class="btn btn-lg btn-info btn-block" type="submit">Content
-        </button>
-    </form>
+<h1 class="modal-header container">Notifications</h1>
+<div class="form">
+    <div th:each="notification : ${notifications}">
+        <form th:action="@{'/course/' + ${notification.comment.game.course.name} + '/' + ${notification.comment.game.name} + '/options'}"
+              method="get">
+            <button th:text="${notification.content} " class="btn btn-lg btn-default btn-block" type="submit">Content
+            </button>
+        </form>
+    </div>
 </div>
-
 </body>
 </html>

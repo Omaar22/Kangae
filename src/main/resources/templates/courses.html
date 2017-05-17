@@ -9,14 +9,15 @@
 <body>
 <div th:replace="fragments/header-in::header"></div>
 
-<h1 class="modal-header">Courses</h1>
-<div th:each="course : ${courses}" class="form">
-    <form th:action="@{'/course/' + ${course.name}}">
-        <button th:text="${course.name} + ' created by: ' + ${course.teacher.name}"
-                class="btn btn-lg btn-primary btn-block" type="submit">Open
-        </button>
-    </form>
+<h1 class="modal-header container">Courses</h1>
+<div class="form">
+    <div th:each="course : ${courses}">
+        <form th:action="@{'/course/' + ${course.name}}">
+            <button th:text="${course.name} + ' created by: ' + ${course.teacher.name}"
+                    class="btn btn-lg btn-default btn-block" type="submit">Open
+            </button>
+        </form>
+    </div>
 </div>
-
 </body>
 </html>
