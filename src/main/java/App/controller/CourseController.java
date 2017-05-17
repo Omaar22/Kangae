@@ -6,6 +6,7 @@ import App.model.Teacher;
 import App.model.User;
 import App.service.CourseService;
 import App.service.GameService;
+import App.service.NotificationService;
 import App.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,11 +23,14 @@ public class CourseController {
     private CourseService courseservice;
     @Autowired
     private GameService gameService;
+    @Autowired
+    private NotificationService notificationService;
 
     @RequestMapping("/courses")
     public String courses(Model model) {
         model.addAttribute("courses", courseservice.getALLCourses());
-        return "/show_courses";
+        model.addAttribute("unreadNotificationsCount", notificationService.getUnreadNotificationsForUser(userService.getLoggedInUser()).size());
+        return "/courses";
     }
 
     @RequestMapping(value = "/course/create")
