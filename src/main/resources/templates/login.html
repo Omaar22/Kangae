@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
@@ -9,11 +10,13 @@
 <div th:replace="fragments/header::header"></div>
 
 <div class="container">
-    <form th:action="@{/signin}" method="post" class="form">
+    <form action='/login' method='POST' class="form">
         <h1 class="form-heading">Sign In</h1>
-        <input th:field="${user.email}" type="email" class="form-control" placeholder="Email address" required="required"/>
-        <input th:field="${user.password}" type="password" class="form-control" placeholder="Password" required="required"/>
-        <h6 th:text="${errorMessage}" style="color: red"></h6>
+        <input name="username" type="email" class="form-control" placeholder="Email address" required="required"/>
+        <input name="password" type="password" class="form-control" placeholder="Password" required="required"/>
+        <div class="alert alert-danger" th:if="${param.error != null}">
+            <span style="color : #ff0000">Wrong Email or Password</span>
+        </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
 </div>

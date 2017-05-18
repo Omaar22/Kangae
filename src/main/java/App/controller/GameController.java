@@ -29,8 +29,7 @@ public class GameController {
     @RequestMapping(value = "/course/{courseName}/create/game")
     public String createGame(@PathVariable String courseName, @ModelAttribute(value = "game") Game game, Model model) {
         game.setCourse(courseService.getCourse(courseName));
-        if (game.getCourse() == null || !userService.isLoggedIn()
-                || !game.getCourse().getTeacher().getEmail().equals(userService.getLoggedInUser().getEmail())) {
+        if (!game.getCourse().getTeacher().getEmail().equals(userService.getLoggedInUser().getEmail())) {
             return "redirect:/";
         } else {
             model.addAttribute("user", userService.getLoggedInUser());
@@ -87,7 +86,7 @@ public class GameController {
     public String update(@PathVariable String courseName, @PathVariable String gameName, Model model) {
         Game game = gameservice.getGameInCourse(courseName, gameName);
 
-        if (userService.isLoggedIn() && game.getCourse().getTeacher().getEmail().equals(userService.getLoggedInUser().getEmail())) {
+        if (game.getCourse().getTeacher().getEmail().equals(userService.getLoggedInUser().getEmail())) {
             model.addAttribute("user", userService.getLoggedInUser());
             model.addAttribute("unreadNotificationsCount", notificationService.getUnreadNotificationsForUser(userService.getLoggedInUser()).size());
             model.addAttribute("game", game);
@@ -104,7 +103,7 @@ public class GameController {
         Game oldGame = gameservice.getGameInCourse(courseName, gameName);
         if (game.getName().equals(oldGame.getName()) || gameservice.isNewName(game)) {
             oldGame.setName(game.getName());
-            oldGame.setDescription(game.getDescription())   ;
+            oldGame.setDescription(game.getDescription());
             oldGame.setInstruction(game.getInstruction());
             oldGame.setAnswer(game.getAnswer());
             oldGame.setQuestion(game.getQuestion());
@@ -144,7 +143,7 @@ public class GameController {
 
     @RequestMapping(value = "/course/{targetCourse}/copy/game")
     public String copyGame(@PathVariable("targetCourse") String targetCourse, Model model) {
-        if (!userService.isLoggedIn() || userService.getLoggedInUser() instanceof Student) {
+        if (userService.getLoggedInUser() instanceof Student) {
             return "redirect:/";
         } else {
             model.addAttribute("games", gameservice.getALLGame());
@@ -159,7 +158,7 @@ public class GameController {
     public String copy(Model model, @PathVariable("targetCourse") String targetCourse, @PathVariable("gameName") String gameName) {
         Game game = gameservice.getGameByName(gameName);
         Course newCourse = courseService.getCourse(targetCourse);
-        if (userService.isLoggedIn() && newCourse.getTeacher().getEmail().equals(userService.getLoggedInUser().getEmail())) {
+        if (newCourse.getTeacher().getEmail().equals(userService.getLoggedInUser().getEmail())) {
             model.addAttribute("user", userService.getLoggedInUser());
             model.addAttribute("unreadNotificationsCount", notificationService.getUnreadNotificationsForUser(userService.getLoggedInUser()).size());
             model.addAttribute("game", gameservice.copyGame(game, newCourse));
@@ -174,15 +173,11 @@ public class GameController {
     @RequestMapping(method = RequestMethod.POST, value = "/course/{courseName}/{gameName}/comment")
     public String addComment(@ModelAttribute(value = "comment") Comment comment, Model model,
                              @PathVariable("courseName") String courseName, @PathVariable("gameName") String gameName) {
-        if (userService.isLoggedIn()) {
-            comment.setGame(gameservice.getGameByName(gameName));
-            comment.setUser(userService.getLoggedInUser());
-            commentService.addComment(comment);
-            notificationService.notifyUser(comment, comment.getGame().getCourse().getTeacher());
-            return playAndEditGame(courseName, gameName, model);
-        } else {
-            return "redirect:/";
-        }
+        comment.setGame(gameservice.getGameByName(gameName));
+        comment.setUser(userService.getLoggedInUser());
+        commentService.addComment(comment);
+        notificationService.notifyUser(comment, comment.getGame().getCourse().getTeacher());
+        return playAndEditGame(courseName, gameName, model);
     }
 
 

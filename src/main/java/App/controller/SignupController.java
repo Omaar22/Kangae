@@ -5,6 +5,7 @@ import App.model.Student;
 import App.model.Teacher;
 import App.model.User;
 import App.service.UserService;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,9 +31,9 @@ public class SignupController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/signup/teacher")
-    public String signupTeacher(@ModelAttribute(value = "user") User user, Model model) {
+    public String signupTeacher(@ModelAttribute(value = "user") User user, HttpServletRequest request, Model model) {
         Teacher teacher = new Teacher(user);
-        if (userService.signup(teacher)) {
+        if (userService.signup(teacher, request)) {
             return "redirect:/";
         } else {
             model.addAttribute("errorMessage", "Incorrect data!");
@@ -40,9 +41,9 @@ public class SignupController {
         }
     }
     @RequestMapping(method = RequestMethod.POST, value = "/signup/student")
-    public String signupStudent(@ModelAttribute(value = "user") User user, Model model) {
+    public String signupStudent(@ModelAttribute(value = "user") User user, HttpServletRequest request, Model model) {
         Student student = new Student(user);
-        if (userService.signup(student)) {
+        if (userService.signup(student, request)) {
             return "redirect:/";
         } else {
             model.addAttribute("errorMessage", "Incorrect data!");

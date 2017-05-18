@@ -35,7 +35,7 @@ public class CourseController {
 
     @RequestMapping(value = "/course/create")
     public String addCourse(Model model) {
-        if (userService.isLoggedIn() && userService.getLoggedInUser() instanceof Teacher) { // authorized
+        if (userService.getLoggedInUser() instanceof Teacher) { // authorized
             if (!model.containsAttribute("course"))
                 model.addAttribute("course", new Course());
             model.addAttribute("user", userService.getLoggedInUser());

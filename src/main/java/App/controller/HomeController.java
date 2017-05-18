@@ -39,36 +39,26 @@ public class HomeController {
 
     @RequestMapping("/notifications")
     public String notifications(Model model) {
-        if (!userService.isLoggedIn()) {
-            return "redirect:/";
-        } else {
-            model.addAttribute("user", userService.getLoggedInUser());
-            ArrayList<Notification> unread = notificationService.getUnreadNotificationsForUser(userService.getLoggedInUser());
-            ArrayList<Notification> notifications = notificationService.getAllNotificationsForUser(userService.getLoggedInUser());
-            model.addAttribute("unreadNotificationsCount", unread.size());
-            if (unread.size() != 0) {
-                model.addAttribute("notifications", unread);
-                notificationService.setAllRead(userService.getLoggedInUser());
+        model.addAttribute("user", userService.getLoggedInUser());
+        ArrayList<Notification> unread = notificationService.getUnreadNotificationsForUser(userService.getLoggedInUser());
+        ArrayList<Notification> notifications = notificationService.getAllNotificationsForUser(userService.getLoggedInUser());
+        model.addAttribute("unreadNotificationsCount", unread.size());
+        if (unread.size() != 0) {
+            model.addAttribute("notifications", unread);
+            notificationService.setAllRead(userService.getLoggedInUser());
 
-            } else {
-                model.addAttribute("notifications", notifications);
-            }
-            return "/notifications";
+        } else {
+            model.addAttribute("notifications", notifications);
         }
+        return "/notifications";
     }
 
     @RequestMapping("/profile")
     public String profile(Model model) {
-        if (!userService.isLoggedIn()) {
-            return "redirect:/";
-        } else {
-            model.addAttribute("user", userService.getLoggedInUser());
-            model.addAttribute("courseCount", courseService.getCoursesByTeacher(userService.getLoggedInUser().getEmail()).size());
-            model.addAttribute("gamesCount", gameService.getGamesByTeacherEmail(userService.getLoggedInUser().getEmail()).size());
-            model.addAttribute("unreadNotificationsCount", notificationService.getUnreadNotificationsForUser(userService.getLoggedInUser()).size());
-            return "/profile";
-        }
+        model.addAttribute("user", userService.getLoggedInUser());
+        model.addAttribute("courseCount", courseService.getCoursesByTeacher(userService.getLoggedInUser().getEmail()).size());
+        model.addAttribute("gamesCount", gameService.getGamesByTeacherEmail(userService.getLoggedInUser().getEmail()).size());
+        model.addAttribute("unreadNotificationsCount", notificationService.getUnreadNotificationsForUser(userService.getLoggedInUser()).size());
+        return "/profile";
     }
-
-
 }
