@@ -26,16 +26,6 @@ public class SigninController {
         return "/login";
     }
 
-//    @RequestMapping(method = RequestMethod.POST, value = "/signin")
-//    public String signin(@ModelAttribute(value = "user") User user, Model model) {
-//        if (!userService.signin(user.getEmail(), user.getPassword())) {
-//            model.addAttribute("errorMessage", "Wrong email or password!");
-//            return signin(model);
-//        } else {
-//            return "redirect:/";
-//        }
-//    }
-
     @RequestMapping(value = "/signout")
     public String signout(HttpServletRequest request, HttpServletResponse response) {
         userService.signOut(request, response);

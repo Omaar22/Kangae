@@ -14,8 +14,7 @@ public class CourseService {
     private CourseRepository courseRepo;
 
     public ArrayList<Course> getALLCourses() {
-        ArrayList<Course> courses = (ArrayList<Course>) courseRepo.findAll();
-        return courses;
+        return (ArrayList<Course>) courseRepo.findAll();
     }
 
     public void addCourse(Course course) {

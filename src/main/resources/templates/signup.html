@@ -11,25 +11,30 @@
 <script type="text/javascript">
     function submitForm(action) {
         document.getElementById('signup').action = action;
-        document.getElementById('signup').submit();
     }
 </script>
 
 <form id="signup" action="#" method="post" class="container form">
     <h1>Sign Up</h1>
-    <input th:field="${user.name}" class="form-control" placeholder="Name" required="required"/>
-    <input th:field="${user.email}" type="email" class="form-control" placeholder="Email address" required="required"/>
-    <input th:field="${user.password}" type="password" minlength="6" class="form-control" placeholder="Password" required="required"/>
-    <input th:field="${user.collegeSchool}" class="form-control" placeholder="CollegeSchool" required="required"/>
+    <input th:field="${user.name}" class="form-control" placeholder="Name" th:required="required"/>
+    <input th:field="${user.email}" type="email" class="form-control" placeholder="Email address"
+           th:required="required"/>
+    <input th:field="${user.password}" type="password" minlength="6" class="form-control" placeholder="Password"
+           th:required="required"/>
+    <input th:field="${user.collegeSchool}" class="form-control" placeholder="CollegeSchool"/>
     <select th:field="${user.gender}" class="form-control">
         <option th:value="male" class="form-control">Male</option>
         <option th:value="female" class="form-control">Female</option>
     </select>
     <input th:field="${user.age}" class="form-control" placeholder="Age"/>
     <input th:field="${user.birthDate}" type="date" class="form-control" placeholder="Birthdate"/>
-    <h6 class="form-signin-heading" th:text="${errorMessage}" style="color: red"></h6>
-    <input type="button" onclick="submitForm('/signup/student')" value="I am a Student" class="btn btn-lg btn-primary" style="width: 50%;"/>
-    <input type="button" onclick="submitForm('/signup/teacher')" value="I am a Teacher" class="btn btn-lg btn-primary" style="width: 49%"/>
+    <div class="alert alert-danger" th:if="${errorMessage != null}">
+        <span style="color : #ff0000" th:text="${errorMessage}">Failed</span>
+    </div>
+    <button type="submit" onclick="submitForm('/signup/student')" class="btn btn-lg btn-primary"
+           style="width: 50%;">I am a Student</button>
+    <button type="submit" onclick="submitForm('/signup/teacher')" class="btn btn-lg btn-primary"
+           style="width: 49%">I am a Teacher</button>
 </form>
 
 </body>

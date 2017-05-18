@@ -38,6 +38,7 @@ public class UserService {
             return false;
         }
         userBaseRepository.save(user);
+        // manually sign in
         authenticateUserAndSetSession(user, request);
         return true;
     }
